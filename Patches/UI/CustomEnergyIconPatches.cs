@@ -29,13 +29,15 @@ public class CustomEnergyIconPatches {
             return new InstructionPatcher(instructions)
                 .Match(new InstructionMatcher()
                     .call(AccessTools.Method(typeof(string), nameof(string.Concat), [typeof(string), typeof(string), typeof(string)]))
-                    .stloc_3()
+                    .stloc_any()
                 )
+                // Use the local the concat result is actually stored in instead of assuming slot 3.
+                .Step(-1).GetIndexOperand(out int textLocal).Step(1)
                 .Insert([
                     CodeInstruction.LoadLocal(0),
-                    CodeInstruction.LoadLocal(3),
+                    CodeInstruction.LoadLocal(textLocal),
                     CodeInstruction.Call(typeof(CustomEnergyIconPatches), nameof(GetTextIcon)),
-                    CodeInstruction.StoreLocal(3),
+                    CodeInstruction.StoreLocal(textLocal),
                 ]);
         }
     }

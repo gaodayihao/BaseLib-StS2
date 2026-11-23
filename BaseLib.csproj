@@ -61,7 +61,12 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\BaseLibCompatibilityHelper\BaseLibCompatibilityHelper.csproj" Private="false"/>
+        <!-- Upstream keeps this helper outside the repository; reference the released assembly
+             instead of a sibling project. Set BaseLibCompatHelperPath in local.props. -->
+        <Reference Include="BaseLibCompatibilityHelper" Condition="'$(BaseLibCompatHelperPath)' != ''">
+            <HintPath>$(BaseLibCompatHelperPath)</HintPath>
+            <Private>false</Private>
+        </Reference>
     </ItemGroup>
 
     <ItemGroup>

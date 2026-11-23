@@ -195,9 +195,11 @@ public static class MultiPileCardSelect
                 .call(AccessTools.Method(typeof(NGridCardHolder), nameof(NGridCardHolder.Create)))
                 .stloc_s()
             )
+            // Use the local that actually receives the created holder instead of assuming a fixed slot.
+            .Step(-1).GetIndexOperand(out int holderLocal).Step(1)
             .Insert([
                 CodeInstruction.LoadArgument(0),
-                CodeInstruction.LoadLocal(10),
+                CodeInstruction.LoadLocal(holderLocal),
                 CodeInstruction.Call(typeof(MultiPileCardSelect), nameof(AddIndicatorNode)),
             ]);
     }

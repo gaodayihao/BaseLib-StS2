@@ -12,7 +12,7 @@ using MegaCrit.Sts2.Core.Saves.Runs;
 
 namespace BaseLib.Patches.Saves;
 
-[HarmonyPatch(typeof(MegaCritSerializerContext), "global::System.Text.Json.Serialization.Metadata.IJsonTypeInfoResolver.GetTypeInfo")]
+[HarmonyPatch(typeof(MegaCritSerializerContext), "System.Text.Json.Serialization.Metadata.IJsonTypeInfoResolver.GetTypeInfo")]
 public class ExtendedSaveTypes
 {
     [HarmonyPostfix]
